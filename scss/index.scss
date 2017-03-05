@@ -27,6 +27,10 @@ body {
       span {
         color: white;
 
+        .easy-autocomplete {
+          display: inline-block;
+        }
+
         .in, .stock, .date {
           border: none;
           border-bottom: 2px solid white;

@@ -22,6 +22,8 @@ body {
       text-align: center; }
       body .container p span {
         color: white; }
+        body .container p span .easy-autocomplete {
+          display: inline-block; }
         body .container p span .in, body .container p span .stock, body .container p span .date {
           border: none;
           border-bottom: 2px solid white;

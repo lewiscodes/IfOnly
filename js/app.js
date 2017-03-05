@@ -1,5 +1,25 @@
+var options = {
+	data: dates,
+  theme: "dark",
+	list: {
+    maxNumberOfElements: 3,
+		match: {
+			enabled: true
+		},
+    showAnimation: {
+			type: "slide", //normal|slide|fade
+			time: 400
+		},
+		hideAnimation: {
+			type: "slide", //normal|slide|fade
+			time: 400
+		}
+	}
+};
+
 randomiseBackground();
 resizeInputs();
+$(".date").easyAutocomplete(options);
 
 function randomiseBackground() {
   var randomNumber = Math.floor(Math.random() * 5) + 1;
@@ -30,21 +50,8 @@ function resizeInputs() {
   });
 
   $("input.date").keyup(function() {
-    calculateResizeInputs(dateTextWidth, "date");
-    formatDate($(".date").val());
+    calculateResizeInputs(dateTextWidth, "date", "easy-autocomplete");
   });
-}
-
-function formatDate(inputText) {
-  var filteredDatesObject = {};
-  var filteredDatesArray = jQuery.grep(dates, function(value) {
-    return value.toUpperCase().indexOf(inputText.toUpperCase()) >= 0;
-  });
-
-  filteredDatesObject.type = "data";
-  filteredDatesObject.value = filteredDatesArray;
-
-  $(".date").easyAutocomplete(filteredDatesObject);
 }
 
 function checkLeapYear() {
@@ -61,7 +68,7 @@ function formatCurrency(inputText) {
   }
 }
 
-function calculateResizeInputs(originalTextWidth, className) {
+function calculateResizeInputs(originalTextWidth, className, additionalElement) {
   var visibleClass = "." + className;
   var hiddenClass = ".hidden_" + className;
   $(hiddenClass).text($(visibleClass).val());
@@ -72,5 +79,11 @@ function calculateResizeInputs(originalTextWidth, className) {
     $(visibleClass).css("width", hiddenTextWidth);
   } else if (hiddenTextWidth < originalTextWidth) {
     $(visibleClass).css("width", originalTextWidth);
+  }
+
+  console.log(additionalElement);
+  if (additionalElement) {
+    var additionalWidth = (hiddenTextWidth - originalTextWidth);
+    console.log(additionalWidth);
   }
 }
