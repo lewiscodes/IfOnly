@@ -17,21 +17,38 @@ function resizeInputs() {
   var dateTextWidth = $(".date").width();
 
   $("input.in").keyup(function () {
-    calculateResizeInputs(inTextWidth, "in")
+    calculateResizeInputs(inTextWidth, "in");
   });
 
   $("input.in").blur(function() {
-    $(".in").val(formatCurrency($(".in").val()))
-    calculateResizeInputs(inTextWidth, "in")
+    $(".in").val(formatCurrency($(".in").val()));
+    calculateResizeInputs(inTextWidth, "in");
   });
 
   $("input.stock").keyup(function() {
-    calculateResizeInputs(stockTextWidth, "stock")
+    calculateResizeInputs(stockTextWidth, "stock");
   });
 
   $("input.date").keyup(function() {
-    calculateResizeInputs(dateTextWidth, "date")
+    calculateResizeInputs(dateTextWidth, "date");
+    formatDate($(".date").val());
   });
+}
+
+function formatDate(inputText) {
+  var filteredDatesObject = {};
+  var filteredDatesArray = jQuery.grep(dates, function(value) {
+    return value.toUpperCase().indexOf(inputText.toUpperCase()) >= 0;
+  });
+
+  filteredDatesObject.type = "data";
+  filteredDatesObject.value = filteredDatesArray;
+
+  $(".date").easyAutocomplete(filteredDatesObject);
+}
+
+function checkLeapYear() {
+  // todo
 }
 
 function formatCurrency(inputText) {
