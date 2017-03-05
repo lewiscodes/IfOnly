@@ -1,6 +1,7 @@
 @import url("http://fonts.googleapis.com/css?family=Lato");
 body {
   font-family: 'Lato', sans-serif;
+  font-size: 3em;
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -20,19 +21,18 @@ body {
       margin-top: 50px;
       text-align: center; }
       body .container p span {
-        color: white;
-        font-size: 3em; }
-        body .container p span input {
+        color: white; }
+        body .container p span .in, body .container p span .stock, body .container p span .date {
           border: none;
           border-bottom: 2px solid white;
           color: white;
           background: none;
           padding: 10px; }
-        body .container p span .in {
+        body .container p span input.in {
           width: 150px; }
-        body .container p span .stock {
+        body .container p span input.stock {
           width: 300px; }
-        body .container p span .date {
+        body .container p span input.date {
           width: 325px; }
 
 .backgroundBody .backgroundOverlay {

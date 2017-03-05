@@ -2,6 +2,7 @@
 
 body {
   font-family: 'Lato', sans-serif;
+  font-size: 3em;
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -25,9 +26,8 @@ body {
 
       span {
         color: white;
-        font-size: 3em;
 
-        input {
+        .in, .stock, .date {
           border: none;
           border-bottom: 2px solid white;
           color: white;
@@ -35,16 +35,18 @@ body {
           padding: 10px;
         }
 
-        .in {
-          width: 150px;
-        }
+        input {
+          &.in {
+            width: 150px;
+          }
 
-        .stock {
-          width: 300px;
-        }
+          &.stock {
+            width: 300px;
+          }
 
-        .date {
-          width: 325px;
+          &.date {
+            width: 325px;
+          }
         }
       }
     }
