@@ -16,9 +16,32 @@ function resizeInputs() {
   var stockTextWidth = $(".stock").width();
   var dateTextWidth = $(".date").width();
 
-  $("input.in").keyup(function () {calculateResizeInputs(inTextWidth, "in")});
-  $("input.stock").keyup(function() {calculateResizeInputs(stockTextWidth, "stock")});
-  $("input.date").keyup(function() {calculateResizeInputs(dateTextWidth, "date")});
+  $("input.in").keyup(function () {
+    calculateResizeInputs(inTextWidth, "in")
+  });
+
+  $("input.in").blur(function() {
+    $(".in").val(formatCurrency($(".in").val()))
+    calculateResizeInputs(inTextWidth, "in")
+  });
+
+  $("input.stock").keyup(function() {
+    calculateResizeInputs(stockTextWidth, "stock")
+  });
+
+  $("input.date").keyup(function() {
+    calculateResizeInputs(dateTextWidth, "date")
+  });
+}
+
+function formatCurrency(inputText) {
+  var formatted = (parseInt(inputText).toLocaleString())
+
+  if (isNaN(inputText)) {
+    return("");
+  } else {
+    return("$" + formatted);
+  }
 }
 
 function calculateResizeInputs(originalTextWidth, className) {
