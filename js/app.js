@@ -1,4 +1,4 @@
-var options = {
+var dateOptions = {
 	data: dates,
   theme: "dark",
 	list: {
@@ -17,9 +17,10 @@ var options = {
 	}
 };
 
+console.log(FTSE);
 randomiseBackground();
 resizeInputs();
-$(".date").easyAutocomplete(options);
+$(".date").easyAutocomplete(dateOptions);
 
 function randomiseBackground() {
   var randomNumber = Math.floor(Math.random() * 5) + 1;
