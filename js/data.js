@@ -7,6 +7,6 @@ getData("2015-01-01", "2016-01-01", "WIKI/AAPL");
 
 function getData(startDate, endDate, code) {
   $.getJSON(URL + code + ".json?" + API_KEY + "&start_date=" + startDate + "&end_date=" + endDate, function(data) {
-    console.log(data);
+    // console.log(data);
   })
 }

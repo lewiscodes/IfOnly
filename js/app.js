@@ -17,10 +17,36 @@ var dateOptions = {
 	}
 };
 
-console.log(FTSE);
+var stockOptions = {
+    data: stock,
+    getValue: "name",
+		theme: "dark",
+    template: {
+      type: "description",
+      fields: {
+          description: "code"
+      }
+    },
+    list: {
+			maxNumberOfElements: 7,
+      match: {
+          enabled: true
+      },
+			showAnimation: {
+				type: "slide", //normal|slide|fade
+				time: 400
+			},
+			hideAnimation: {
+				type: "slide", //normal|slide|fade
+				time: 400
+			}
+    }
+};
+
 randomiseBackground();
 resizeInputs();
 $(".date").easyAutocomplete(dateOptions);
+$(".stock").easyAutocomplete(stockOptions);
 
 function randomiseBackground() {
   var randomNumber = Math.floor(Math.random() * 5) + 1;
@@ -82,9 +108,7 @@ function calculateResizeInputs(originalTextWidth, className, additionalElement) 
     $(visibleClass).css("width", originalTextWidth);
   }
 
-  console.log(additionalElement);
   if (additionalElement) {
     var additionalWidth = (hiddenTextWidth - originalTextWidth);
-    console.log(additionalWidth);
   }
 }
