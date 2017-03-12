@@ -99,11 +99,13 @@ function calculateResizeInputs(originalTextWidth, className, additionalElement) 
 
   if (hiddenTextWidth > originalTextWidth) {
     $(visibleClass).css("width", hiddenTextWidth);
+
 		if (additionalElement) {
 			$($(visibleClass).parent()).css("width", hiddenTextWidth);
 		}
   } else if (hiddenTextWidth < originalTextWidth) {
 		$(visibleClass).css("width", originalTextWidth);
+
 		if (additionalElement) {
 			$($(visibleClass).parent()).css("width", originalTextWidth);
 		}
