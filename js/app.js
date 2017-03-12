@@ -64,6 +64,7 @@ $("input.in").keyup(function () {
 
 $("input.in").blur(function() {
 	$(".in").val(formatCurrency($(".in").val()));
+	validateCurrency($(".in").val());
 	calculateResizeInputs(inTextWidth, "in");
 });
 
@@ -71,12 +72,19 @@ $("input.stock").keyup(function() {
 	calculateResizeInputs(stockTextWidth, "stock", true);
 });
 
+$("input.stock").blur(function() {
+	validateTicker($("input.stock").val());
+});
+
 $("input.date").keyup(function() {
 	calculateResizeInputs(dateTextWidth, "date", true);
 });
 
 $("input.date").blur(function() {
-	$("input.date").val(checkLeapYear($("input.date").val()));
+	var test = validateDate($("input.date").val());
+	if (validateDate($("input.date").val())) {
+		$("input.date").val(checkLeapYear($("input.date").val()));
+	}
 });
 
 $("button").click(function() {
@@ -159,13 +167,40 @@ function whatAreTheyWorthNow(numberofShares ,shares) {
 }
 
 function validateCurrency(input) {
-  console.log(input);
-}
+	var currency = input.substring(1);
+	currency = currency.replace(/,/g, '');
+	currency = parseFloat(currency)
 
-function validateDate(input) {
-  console.log(input);
+	if (isNaN(currency)) {
+		$("input.in").css("border-color","red");
+		return false;
+	} else {
+		$("input.in").css("border-color","inherit");
+		return true;
+	}
 }
 
 function validateTicker(input) {
-  console.log(input);
+	var test = $.grep(stock, function(x){ return x.name == input; });
+	if (test.length > 0) {
+		$("input.stock").css("border-color","inherit");
+		return true;
+	} else {
+		$("input.stock").val("");
+		$("input.stock").css("border-color","red");
+		return false;
+	}
+}
+
+function validateDate(input) {
+	var year = parseInt(input.substr(input.length - 4));
+	var monthDay = dates.indexOf(input.slice(0, -5).trim());
+
+	if (isNaN(year) === false && monthDay !== -1) {
+		$("input.date").css("color", "inherit").css("border-color","inherit");
+		return true;
+	} else {
+		$("input.date").css("color", "red").css("border-color","red");
+		return false;
+	}
 }
