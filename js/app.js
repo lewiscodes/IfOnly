@@ -112,6 +112,8 @@ function checkLeapYear(input) {
 		} else {
 			return "28th February " + year;
 		}
+	} else {
+		return input;
 	}
 }
 
