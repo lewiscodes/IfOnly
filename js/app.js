@@ -88,7 +88,22 @@ $("input.date").blur(function() {
 });
 
 $("button").click(function() {
-	getData("2015-01-01", "2016-01-01", "WIKI/AAPL");
+	if (validateCurrency($(".in").val()) && validateTicker($("input.stock").val()) && validateDate($("input.date").val())) {
+		var ticker = $("input.stock").val();
+		var url = $.grep(stock, function(x){ return x.name == ticker; })[0].url;
+
+		var todayDate = new Date().toISOString().slice(0,10);
+		var date = $("input.date").val();
+		var year = parseInt(date.substr(date.length - 4));
+		var month = date.substring(date.indexOf(" ") + 1);
+		month = month.substring(0, month.length - 5);
+		month = getMonth(month);
+		var day = date.substr(0 ,date.indexOf(' '));
+		day  = day.substring(0, day.length - 2);
+		date = year + "-" + month + "-" + day;
+
+		getData(date, todayDate, url);
+	}
 });
 
 function randomiseBackground() {
@@ -204,5 +219,33 @@ function validateDate(input) {
 	} else {
 		$("input.date").css("color", "red").css("border-color","red");
 		return false;
+	}
+}
+
+function getMonth(input) {
+	if (input.toUpperCase() === "JANUARY") {
+		return "01";
+	} else if (input.toUpperCase() === "FEBRUARY") {
+		return "02";
+	} else if (input.toUpperCase() === "MARCH") {
+		return "03";
+	} else if (input.toUpperCase() === "APRIL") {
+		return "04";
+	} else if (input.toUpperCase() === "MAY") {
+		return "05";
+	} else if (input.toUpperCase() === "JUNE") {
+		return "06";
+	} else if (input.toUpperCase() === "JULY") {
+		return "07";
+	} else if (input.toUpperCase() === "AUGUST") {
+		return "08";
+	} else if (input.toUpperCase() === "SEPTEMBER") {
+		return "09";
+	} else if (input.toUpperCase() === "OCTOBER") {
+		return "10";
+	} else if (input.toUpperCase() === "NOVEMBER") {
+		return "11";
+	} else {
+		return "12";
 	}
 }
