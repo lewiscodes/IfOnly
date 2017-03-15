@@ -2,7 +2,6 @@
 
 body {
   font-family: sans-serif;
-  font-size: 3em;
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -11,7 +10,7 @@ body {
 
   .container {
     width: 85%;
-    height: 85vh;
+    min-height: 85vh;
     background-color: black;
     opacity: 0.8;
     position: absolute;
@@ -35,7 +34,8 @@ body {
     }
 
     p {
-      margin-top: 50px;
+      font-size: 3em;
+      margin: 25px;
       text-align: center;
 
       span {
@@ -64,6 +64,30 @@ body {
 
           &.date {
             width: 325px;
+          }
+        }
+      }
+    }
+
+    .dataTable {
+      display: inline-table;
+      color: white;
+      font-size: 2em;
+      float: right;
+      margin-right: 50px;
+      .row {
+        display: table-row;
+        .cell {
+          display: table-cell;
+          border: 1px solid white;
+          padding: 10px 10px;
+
+          &.header {
+            text-align: left;
+          }
+
+          &.data {
+            min-width: 150px;
           }
         }
       }

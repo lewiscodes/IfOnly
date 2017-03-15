@@ -1,7 +1,6 @@
 @import url("http://fonts.googleapis.com/css?family=Lato");
 body {
   font-family: sans-serif;
-  font-size: 3em;
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -9,7 +8,7 @@ body {
   background-position: center; }
   body .container {
     width: 85%;
-    height: 85vh;
+    min-height: 85vh;
     background-color: black;
     opacity: 0.8;
     position: absolute;
@@ -28,7 +27,8 @@ body {
       body .container button:hover {
         text-decoration: underline; }
     body .container p {
-      margin-top: 50px;
+      font-size: 3em;
+      margin: 25px;
       text-align: center; }
       body .container p span {
         color: white; }
@@ -46,6 +46,22 @@ body {
           width: 210px; }
         body .container p span input.date {
           width: 325px; }
+    body .container .dataTable {
+      display: inline-table;
+      color: white;
+      font-size: 2em;
+      float: right;
+      margin-right: 50px; }
+      body .container .dataTable .row {
+        display: table-row; }
+        body .container .dataTable .row .cell {
+          display: table-cell;
+          border: 1px solid white;
+          padding: 10px 10px; }
+          body .container .dataTable .row .cell.header {
+            text-align: left; }
+          body .container .dataTable .row .cell.data {
+            min-width: 150px; }
 
 .backgroundBody .backgroundOverlay {
   opacity: 0; }

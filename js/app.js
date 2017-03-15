@@ -104,6 +104,7 @@ $("button").click(function() {
 		date = year + "-" + month + "-" + day;
 
 		getData(date, todayDate, url);
+		$("button").css("display","none");
 	}
 });
 
@@ -135,7 +136,9 @@ function checkLeapYear(input) {
 }
 
 function formatCurrency(inputText) {
-  var formatted = (parseInt(inputText).toLocaleString())
+
+  // var formatted = (parseInt(inputText).toLocaleString());
+	var formatted = (parseFloat(inputText).toFixed(2).toLocaleString())
 
   if (isNaN(inputText)) {
     return("");
@@ -171,8 +174,11 @@ function calculateResizeInputs(originalTextWidth, className, additionalElement) 
 
 function getData(startDate, endDate, code) {
   $.getJSON(URL + code + ".json?" + API_KEY + "&start_date=" + startDate + "&end_date=" + endDate, function(data) {
-    numberOfShares = howManyShares(1000, data);
+		var amountInvested = validateCurrency($(".in").val());
+    numberOfShares = howManyShares(amountInvested, data);
+		addTableData(".numberOfShares",numberOfShares);
     eachSharehNowWorth = whatAreTheyWorthNow(numberOfShares, data);
+		addTableData(".salePrice", formatCurrency(eachSharehNowWorth));
     ifOnly = formatCurrency(Math.floor(numberOfShares * eachSharehNowWorth));
     $(".ifOnly").text(ifOnly);
   })
@@ -181,6 +187,7 @@ function getData(startDate, endDate, code) {
 function howManyShares(amountInvested, shares) {
 	var lastIndex = shares.dataset.data.length;
   var openingPrice = shares.dataset.data[lastIndex - 1][1];
+	addTableData(".purchasePrice", formatCurrency(openingPrice));
   return Math.floor(amountInvested / openingPrice);
 }
 
@@ -198,7 +205,8 @@ function validateCurrency(input) {
 		return false;
 	} else {
 		$("input.in").css("border-color","inherit");
-		return true;
+		// return true;
+		return currency;
 	}
 }
 
@@ -253,4 +261,8 @@ function getMonth(input) {
 	} else {
 		return "12";
 	}
+}
+
+function addTableData(className, data) {
+	$(".data" + className).text(data);
 }
