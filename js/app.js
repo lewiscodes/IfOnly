@@ -88,10 +88,11 @@ $("input.date").blur(function() {
 });
 
 $("button").click(function() {
+	// if all input validation passes
 	if (validateCurrency($(".in").val()) && validateTicker($("input.stock").val()) && validateDate($("input.date").val())) {
 		var ticker = $("input.stock").val();
 		var url = $.grep(stock, function(x){ return x.name == ticker; })[0].url;
-
+		// format dates
 		var todayDate = new Date().toISOString().slice(0,10);
 		var date = $("input.date").val();
 		var year = parseInt(date.substr(date.length - 4));
@@ -111,6 +112,7 @@ function randomiseBackground() {
   var image = new Image();
   image.onload = function() {
     window.document.body.background = image.src;
+		// adding class causes bachground to fade in
     window.document.body.className += "backgroundBody";
   }
   image.src = "./img/" + randomNumber + ".jpg";
@@ -143,6 +145,9 @@ function formatCurrency(inputText) {
 }
 
 function calculateResizeInputs(originalTextWidth, className, additionalElement) {
+	// adds input text to an identically styled span;
+		// measures the width of that span
+		// uses that to determine if the input has to be wider
   var visibleClass = "." + className;
   var hiddenClass = ".hidden_" + className;
   $(hiddenClass).text($(visibleClass).val());
