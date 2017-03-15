@@ -174,13 +174,13 @@ function getData(startDate, endDate, code) {
 }
 
 function howManyShares(amountInvested, shares) {
-  var openingPrice = shares.dataset.data[0][1];
+	var lastIndex = shares.dataset.data.length;
+  var openingPrice = shares.dataset.data[lastIndex - 1][1];
   return Math.floor(amountInvested / openingPrice);
 }
 
 function whatAreTheyWorthNow(numberofShares ,shares) {
-  var lastIndex = shares.dataset.data.length;
-  return shares.dataset.data[lastIndex - 1][3];
+  return shares.dataset.data[0][3];
 }
 
 function validateCurrency(input) {
