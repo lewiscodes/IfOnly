@@ -53,6 +53,10 @@ body {
           padding: 10px;
         }
 
+        .ifOnly {
+          min-width: 50px;
+        }
+
         input {
           &.in {
             width: 150px;

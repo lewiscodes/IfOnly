@@ -2,6 +2,7 @@
 // https://www.quandl.com/api/v3/datasets/GOOG/LON_TSCO.json
 var URL = "https://www.quandl.com/api/v3/datasets/";
 var API_KEY = "api_key=LZ5yVTJ1qD8WbKyh2GRg";
+var ajaxSpinner = "<img src='./img/spinner.gif'/>";
 var numberOfShares = 0;
 var eachSharehNowWorth = 0;
 var ifOnly = 0;
@@ -90,6 +91,11 @@ $("input.date").blur(function() {
 $("button").click(function() {
 	// if all input validation passes
 	if (validateCurrency($(".in").val()) && validateTicker($("input.stock").val()) && validateDate($("input.date").val())) {
+		// adds AJAX spinners on click
+		$(".dataTable .row .data").append(ajaxSpinner);
+		$(".ifOnly").text("");
+		$(".ifOnly").append(ajaxSpinner);
+
 		var ticker = $("input.stock").val();
 		var url = $.grep(stock, function(x){ return x.name == ticker; })[0].url;
 		// format dates
@@ -264,5 +270,6 @@ function getMonth(input) {
 }
 
 function addTableData(className, data) {
-	$(".data" + className).text(data);
+	var randomNumber = (Math.floor(Math.random() * 5) + 1) * 100;
+	window.setTimeout(function() {$(".data" + className).text(data);}, randomNumber);
 }

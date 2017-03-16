@@ -40,6 +40,8 @@ body {
           color: white;
           background: none;
           padding: 10px; }
+        body .container p span .ifOnly {
+          min-width: 50px; }
         body .container p span input.in {
           width: 150px; }
         body .container p span input.stock {
