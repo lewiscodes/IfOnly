@@ -1,5 +1,3 @@
-// https://www.quandl.com/api/v3/datasets/WIKI/AAPL.json
-// https://www.quandl.com/api/v3/datasets/GOOG/LON_TSCO.json
 var URL = "https://www.quandl.com/api/v3/datasets/";
 var API_KEY = "api_key=LZ5yVTJ1qD8WbKyh2GRg";
 var ajaxSpinner = "<img src='./img/spinner.gif'/>";
@@ -187,6 +185,9 @@ function getData(startDate, endDate, code) {
 		addTableData(".salePrice", formatCurrency(eachSharehNowWorth));
     ifOnly = formatCurrency(Math.floor(numberOfShares * eachSharehNowWorth));
     $(".ifOnly").text(ifOnly);
+
+		var chartData = generateChartData(data);
+		drawChart(chartData);
   })
 }
 
@@ -272,4 +273,18 @@ function getMonth(input) {
 function addTableData(className, data) {
 	var randomNumber = (Math.floor(Math.random() * 5) + 1) * 100;
 	window.setTimeout(function() {$(".data" + className).text(data);}, randomNumber);
+}
+
+function generateChartData(input) {
+	var dataArray = [];
+	for (var x = 0; x < input.dataset.data.length; x++) {
+		dataArray.push(input.dataset.data[x][1])
+	}
+	return dataArray.reverse();
+}
+
+function drawChart(chartData) {
+	console.log(chartData);
+	// var ctx = $("#myChart");
+	// var myChart = new Chart(ctx, {...});
 }
