@@ -62,7 +62,7 @@ $("input.in").keyup(function () {
 });
 
 $("input.in").blur(function() {
-	$(".in").val(formatCurrency($(".in").val()));
+	$(".in").val(formatCurrency($(".in").val(),0));
 	validateCurrency($(".in").val());
 	calculateResizeInputs(inTextWidth, "in");
 });
@@ -140,15 +140,19 @@ function checkLeapYear(input) {
 	}
 }
 
-function formatCurrency(inputText) {
+function formatCurrency(inputText, dp) {
 
-  // var formatted = (parseInt(inputText).toLocaleString());
-	var formatted = (parseFloat(inputText).toFixed(2).toLocaleString())
+  var formatted0 = (parseInt(inputText).toLocaleString());
+	var formatted2 = (parseFloat(inputText).toFixed(2).toLocaleString())
 
   if (isNaN(inputText)) {
     return("");
   } else {
-    return("$" + formatted);
+		if (dp === 0) {
+			return("$" + formatted0);
+		} else {
+			return("$" + formatted2);
+		}
   }
 }
 
@@ -183,17 +187,17 @@ function getData(startDate, endDate, code) {
     numberOfShares = howManyShares(amountInvested, data);
 		addTableData(".numberOfShares",numberOfShares, 1500);
     eachSharehNowWorth = whatAreTheyWorthNow(numberOfShares, data);
-		addTableData(".salePrice", formatCurrency(eachSharehNowWorth), 1750);
-    ifOnly = formatCurrency(Math.floor(numberOfShares * eachSharehNowWorth));
+		addTableData(".salePrice", formatCurrency(eachSharehNowWorth, 2), 1750);
+    ifOnly = formatCurrency(Math.floor(numberOfShares * eachSharehNowWorth), 0);
     $(".ifOnly").text(ifOnly);
-		findBestPrice(data.dataset.data);
+		findBestPrice(data.dataset.data, numberOfShares, eachSharehNowWorth);
   })
 }
 
 function howManyShares(amountInvested, shares) {
 	var lastIndex = shares.dataset.data.length;
   var openingPrice = shares.dataset.data[lastIndex - 1][8];
-	addTableData(".purchasePrice", formatCurrency(openingPrice), 1000);
+	addTableData(".purchasePrice", formatCurrency(openingPrice, 2), 1000);
   return Math.floor(amountInvested / openingPrice);
 }
 
@@ -273,7 +277,7 @@ function addTableData(className, data, delay) {
 	window.setTimeout(function() {$(".data" + className).text(data);}, delay);
 }
 
-function findBestPrice(input) {
+function findBestPrice(input, numberOfShares, originalValue) {
 	var highestPrice = 0;
 	var dateOfHighestPrice = null;
 	for (var x = 0; x < input.length; x++) {
@@ -282,4 +286,11 @@ function findBestPrice(input) {
 			dateOfHighestPrice = input[x][0];
 		}
 	}
+
+	var wouldHaveBeenWorth = highestPrice * numberOfShares;
+	var difference = wouldHaveBeenWorth - (numberOfShares * originalValue);
+
+	$(".ifOnlyDate").text(dateOfHighestPrice);
+	$(".ifOnlyShare").text(formatCurrency(highestPrice, 2));
+	$(".ifOnlyTotal").text(formatCurrency(difference, 0));
 }
