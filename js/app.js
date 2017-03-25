@@ -108,7 +108,8 @@ $("button").click(function() {
 		date = year + "-" + month + "-" + day;
 
 		getData(date, todayDate, url);
-		$("button").css("display","none");
+		$(".dataTable").css("display","inline-table");
+		$(".secondary").css("display","block");
 	}
 });
 
@@ -185,12 +186,13 @@ function getData(startDate, endDate, code) {
 		addTableData(".salePrice", formatCurrency(eachSharehNowWorth), 1750);
     ifOnly = formatCurrency(Math.floor(numberOfShares * eachSharehNowWorth));
     $(".ifOnly").text(ifOnly);
+		findBestPrice(data.dataset.data);
   })
 }
 
 function howManyShares(amountInvested, shares) {
 	var lastIndex = shares.dataset.data.length;
-  var openingPrice = shares.dataset.data[lastIndex - 1][1];
+  var openingPrice = shares.dataset.data[lastIndex - 1][8];
 	addTableData(".purchasePrice", formatCurrency(openingPrice), 1000);
   return Math.floor(amountInvested / openingPrice);
 }
@@ -269,4 +271,15 @@ function getMonth(input) {
 
 function addTableData(className, data, delay) {
 	window.setTimeout(function() {$(".data" + className).text(data);}, delay);
+}
+
+function findBestPrice(input) {
+	var highestPrice = 0;
+	var dateOfHighestPrice = null;
+	for (var x = 0; x < input.length; x++) {
+		if (input[x][8] >= highestPrice) {
+			highestPrice = input[x][8];
+			dateOfHighestPrice = input[x][0];
+		}
+	}
 }

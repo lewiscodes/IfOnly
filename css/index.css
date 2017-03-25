@@ -23,7 +23,9 @@ body {
       background: transparent;
       padding: 10px 20px;
       border-radius: 20px;
-      font-size: 40px; }
+      font-size: 40px;
+      display: block;
+      margin: auto; }
       body .container button:hover {
         text-decoration: underline; }
     body .container p {
@@ -49,11 +51,10 @@ body {
         body .container p span input.date {
           width: 325px; }
     body .container .dataTable {
-      display: inline-table;
+      display: none;
       color: white;
       font-size: 2em;
-      float: right;
-      margin-right: 50px; }
+      margin-top: 50px; }
       body .container .dataTable .row {
         display: table-row; }
         body .container .dataTable .row .cell {
@@ -64,6 +65,10 @@ body {
             text-align: left; }
           body .container .dataTable .row .cell.data {
             min-width: 150px; }
+  body .secondary {
+    display: none;
+    color: white;
+    margin-top: 50px; }
 
 .backgroundBody .backgroundOverlay {
   opacity: 0; }

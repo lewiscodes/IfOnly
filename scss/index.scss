@@ -27,6 +27,8 @@ body {
       padding: 10px 20px;
       border-radius: 20px;
       font-size: 40px;
+      display: block;
+      margin: auto;
 
       &:hover {
         text-decoration: underline;
@@ -74,11 +76,10 @@ body {
     }
 
     .dataTable {
-      display: inline-table;
+      display: none;
       color: white;
       font-size: 2em;
-      float: right;
-      margin-right: 50px;
+      margin-top: 50px;
       .row {
         display: table-row;
         .cell {
@@ -96,6 +97,12 @@ body {
         }
       }
     }
+  }
+
+  .secondary {
+    display: none;
+    color: white;
+    margin-top: 50px;
   }
 }
 
