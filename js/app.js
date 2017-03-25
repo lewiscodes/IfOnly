@@ -180,21 +180,18 @@ function getData(startDate, endDate, code) {
   $.getJSON(URL + code + ".json?" + API_KEY + "&start_date=" + startDate + "&end_date=" + endDate, function(data) {
 		var amountInvested = validateCurrency($(".in").val());
     numberOfShares = howManyShares(amountInvested, data);
-		addTableData(".numberOfShares",numberOfShares);
+		addTableData(".numberOfShares",numberOfShares, 1500);
     eachSharehNowWorth = whatAreTheyWorthNow(numberOfShares, data);
-		addTableData(".salePrice", formatCurrency(eachSharehNowWorth));
+		addTableData(".salePrice", formatCurrency(eachSharehNowWorth), 1750);
     ifOnly = formatCurrency(Math.floor(numberOfShares * eachSharehNowWorth));
     $(".ifOnly").text(ifOnly);
-
-		var chartData = generateChartData(data);
-		drawChart(chartData);
   })
 }
 
 function howManyShares(amountInvested, shares) {
 	var lastIndex = shares.dataset.data.length;
   var openingPrice = shares.dataset.data[lastIndex - 1][1];
-	addTableData(".purchasePrice", formatCurrency(openingPrice));
+	addTableData(".purchasePrice", formatCurrency(openingPrice), 1000);
   return Math.floor(amountInvested / openingPrice);
 }
 
@@ -270,21 +267,6 @@ function getMonth(input) {
 	}
 }
 
-function addTableData(className, data) {
-	var randomNumber = (Math.floor(Math.random() * 5) + 1) * 100;
-	window.setTimeout(function() {$(".data" + className).text(data);}, randomNumber);
-}
-
-function generateChartData(input) {
-	var dataArray = [];
-	for (var x = 0; x < input.dataset.data.length; x++) {
-		dataArray.push(input.dataset.data[x][1])
-	}
-	return dataArray.reverse();
-}
-
-function drawChart(chartData) {
-	console.log(chartData);
-	// var ctx = $("#myChart");
-	// var myChart = new Chart(ctx, {...});
+function addTableData(className, data, delay) {
+	window.setTimeout(function() {$(".data" + className).text(data);}, delay);
 }
