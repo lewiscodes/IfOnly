@@ -93,6 +93,9 @@ $("button").click(function() {
 		$(".dataTable .row .data").append(ajaxSpinner);
 		$(".ifOnly").text("");
 		$(".ifOnly").append(ajaxSpinner);
+		$(".ifOnlyDate").append(ajaxSpinner);
+		$(".ifOnlyShare").append(ajaxSpinner);
+		$(".ifOnlyTotal").append(ajaxSpinner);
 
 		var ticker = $("input.stock").val();
 		var url = $.grep(stock, function(x){ return x.name == ticker; })[0].url;
@@ -102,7 +105,7 @@ $("button").click(function() {
 		var year = parseInt(date.substr(date.length - 4));
 		var month = date.substring(date.indexOf(" ") + 1);
 		month = month.substring(0, month.length - 5);
-		month = getMonth(month);
+		month = getMonthNumber(month);
 		var day = date.substr(0 ,date.indexOf(' '));
 		day  = day.substring(0, day.length - 2);
 		date = year + "-" + month + "-" + day;
@@ -245,7 +248,7 @@ function validateDate(input) {
 	}
 }
 
-function getMonth(input) {
+function getMonthNumber(input) {
 	if (input.toUpperCase() === "JANUARY") {
 		return "01";
 	} else if (input.toUpperCase() === "FEBRUARY") {
@@ -273,6 +276,48 @@ function getMonth(input) {
 	}
 }
 
+function getMonthName(input) {
+	if (input === "01") {
+		return "January";
+	} else if (input === "02") {
+		return "February";
+	} else if (input === "03") {
+		return "March";
+	} else if (input === "04") {
+		return "April";
+	} else if (input === "05") {
+		return "May";
+	} else if (input === "06") {
+		return "June";
+	} else if (input === "07") {
+		return "July";
+	} else if (input === "08") {
+		return "August";
+	} else if (input === "09") {
+		return "September";
+	} else if (input === "10") {
+		return "October";
+	} else if (input === "11") {
+		return "November";
+	} else {
+		return "December";
+	}
+}
+
+function getDayPrefix(input) {
+	input = input.toString();
+
+	if (input === "01" || input === "21" | input == "31") {
+		return input + "st";
+	} else if (input === "02" || input === "22") {
+		return input + "nd";
+	} else if (input === "03" || input === "23") {
+		return input + "rd";
+	} else {
+		return input + "th";
+	}
+}
+
 function addTableData(className, data, delay) {
 	window.setTimeout(function() {$(".data" + className).text(data);}, delay);
 }
@@ -290,7 +335,15 @@ function findBestPrice(input, numberOfShares, originalValue) {
 	var wouldHaveBeenWorth = highestPrice * numberOfShares;
 	var difference = wouldHaveBeenWorth - (numberOfShares * originalValue);
 
-	$(".ifOnlyDate").text(dateOfHighestPrice);
-	$(".ifOnlyShare").text(formatCurrency(highestPrice, 2));
-	$(".ifOnlyTotal").text(formatCurrency(difference, 0));
+	window.setTimeout(function() {$(".ifOnlyDate").text(formatDate(dateOfHighestPrice))}, 2000);
+	window.setTimeout(function() {$(".ifOnlyShare").text(formatCurrency(highestPrice, 2))}, 2250);
+	window.setTimeout(function() {$(".ifOnlyTotal").text(formatCurrency(difference, 0))}, 2500);
+}
+
+function formatDate(date) {
+	var year = parseInt(date.substr(0, 4));
+	var month = getMonthName(parseInt(date.substr(5, 2)));
+	var day = getDayPrefix(parseInt(date.substr(8, 2)));
+
+	return day + " " + month + " " + year;
 }
