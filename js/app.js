@@ -17,7 +17,7 @@ var dateOptions = {
 			enabled: true
 		},
     showAnimation: {
-			type: "slide",
+			type: "slide", //normal|slide|fade
 			time: 400
 		},
 		hideAnimation: {
