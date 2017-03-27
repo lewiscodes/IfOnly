@@ -36,9 +36,10 @@ body {
     }
 
     p {
-      font-size: 3em;
+      font-size: 45px;;
       margin: 25px;
       text-align: center;
+      padding: 20px 20px;
 
       span {
         color: white;
@@ -103,6 +104,10 @@ body {
     display: none;
     color: white;
     margin-top: 50px;
+
+    .ifOnlyDate {
+      white-space: nowrap;
+    }
   }
 }
 
@@ -122,4 +127,15 @@ body {
   background-color: black;
   opacity: 1;
   transition: opacity 5s linear;
+}
+
+@media only screen and (max-device-width: 600px)  {
+  body {
+    color: green;
+    .container {
+      p {
+        font-size: 25px;
+      }
+    }
+  }
 }

@@ -29,9 +29,10 @@ body {
       body .container button:hover {
         text-decoration: underline; }
     body .container p {
-      font-size: 3em;
+      font-size: 45px;
       margin: 25px;
-      text-align: center; }
+      text-align: center;
+      padding: 20px 20px; }
       body .container p span {
         color: white; }
         body .container p span .easy-autocomplete {
@@ -69,6 +70,8 @@ body {
     display: none;
     color: white;
     margin-top: 50px; }
+    body .secondary .ifOnlyDate {
+      white-space: nowrap; }
 
 .backgroundBody .backgroundOverlay {
   opacity: 0; }
@@ -85,5 +88,11 @@ body {
   background-color: black;
   opacity: 1;
   transition: opacity 5s linear; }
+
+@media only screen and (max-device-width: 600px) {
+  body {
+    color: green; }
+    body .container p {
+      font-size: 25px; } }
 
 /*# sourceMappingURL=index.css.map */
