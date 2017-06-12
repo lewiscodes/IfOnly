@@ -187,19 +187,25 @@ function calculateResizeInputs(originalTextWidth, className, additionalElement) 
 function getData(startDate, endDate, code) {
   $.getJSON(URL + code + ".json?" + API_KEY + "&start_date=" + startDate + "&end_date=" + endDate, function(data) {
 		var amountInvested = validateCurrency($(".in").val());
-    numberOfShares = howManyShares(amountInvested, data);
+    numberOfShares = howManyShares(amountInvested, data, code);
 		addTableData(".numberOfShares",numberOfShares, 1500);
     eachSharehNowWorth = whatAreTheyWorthNow(numberOfShares, data);
 		addTableData(".salePrice", formatCurrency(eachSharehNowWorth, 2), 1750);
     ifOnly = formatCurrency(Math.floor(numberOfShares * eachSharehNowWorth), 0);
     $(".ifOnly").text(ifOnly);
-		findBestPrice(data.dataset.data, numberOfShares, eachSharehNowWorth);
+		findBestPrice(data.dataset.data, numberOfShares, eachSharehNowWorth, code);
   })
 }
 
-function howManyShares(amountInvested, shares) {
+function howManyShares(amountInvested, shares, code) {
+	var index = 0;
+	if (code.substring(0, 5) === "WIKI/") {
+		index = 8;
+	} else {
+		index = 3;
+	}
 	var lastIndex = shares.dataset.data.length;
-  var openingPrice = shares.dataset.data[lastIndex - 1][8];
+  var openingPrice = shares.dataset.data[lastIndex - 1][index];
 	addTableData(".purchasePrice", formatCurrency(openingPrice, 2), 1000);
   return Math.floor(amountInvested / openingPrice);
 }
@@ -322,12 +328,20 @@ function addTableData(className, data, delay) {
 	window.setTimeout(function() {$(".data" + className).text(data);}, delay);
 }
 
-function findBestPrice(input, numberOfShares, originalValue) {
+function findBestPrice(input, numberOfShares, originalValue, code) {
+	
+	var index = 0;
+	if (code.substring(0, 5) === "WIKI/") {
+		index = 8;
+	} else {
+		index = 3;
+	}
+	
 	var highestPrice = 0;
 	var dateOfHighestPrice = null;
 	for (var x = 0; x < input.length; x++) {
-		if (input[x][8] >= highestPrice) {
-			highestPrice = input[x][8];
+		if (input[x][index] >= highestPrice) {
+			highestPrice = input[x][index];
 			dateOfHighestPrice = input[x][0];
 		}
 	}
