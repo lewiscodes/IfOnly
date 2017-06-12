@@ -8,21 +8,15 @@ var inTextWidth = $(".in").width();
 var stockTextWidth = $(".stock").width();
 var dateTextWidth = $(".date").width();
 
-var dateOptions = {
-	data: dates,
-  theme: "dark",
-	list: {
-    maxNumberOfElements: 3,
-		match: {
-			enabled: true
-		},
-    showAnimation: {
-			type: "slide", //normal|slide|fade
-			time: 400
-		},
-		hideAnimation: {
-			type: "slide", //normal|slide|fade
-			time: 400
+var datePickerOptions = {
+	timepicker:false,
+	format:'Y.m.d',
+	theme: 'dark',
+	validateOnBlur:false,
+	onClose:function(dp, $input){
+		if ($input[0].value.length === 10) {
+			$(".date").val(formatDate($input[0].value));
+			calculateResizeInputs(dateTextWidth, "date", true);
 		}
 	}
 };
@@ -54,7 +48,7 @@ var stockOptions = {
 };
 
 randomiseBackground();
-$(".date").easyAutocomplete(dateOptions);
+$(".date").datetimepicker(datePickerOptions);
 $(".stock").easyAutocomplete(stockOptions);
 
 $("input.in").keyup(function () {
@@ -327,11 +321,11 @@ function getMonthName(input) {
 function getDayPrefix(input) {
 	input = input.toString();
 
-	if (input === "01" || input === "21" | input == "31") {
+	if (input === "01" || input === "1" || input === "21" | input == "31") {
 		return input + "st";
-	} else if (input === "02" || input === "22") {
+	} else if (input === "02" || input === "2" || input === "22") {
 		return input + "nd";
-	} else if (input === "03" || input === "23") {
+	} else if (input === "03" || input === "3" || input === "23") {
 		return input + "rd";
 	} else {
 		return input + "th";
