@@ -206,8 +206,22 @@ function howManyShares(amountInvested, shares, code) {
 	}
 	var lastIndex = shares.dataset.data.length;
   var openingPrice = shares.dataset.data[lastIndex - 1][index];
+	updateInputsWithCorrectData(shares.dataset.data[lastIndex - 1], amountInvested, openingPrice);
 	addTableData(".purchasePrice", formatCurrency(openingPrice, 2), 1000);
   return Math.floor(amountInvested / openingPrice);
+}
+
+function updateInputsWithCorrectData(data, amountInvested, openingPrice) {
+	// update initial amount invested with actual amount spent based on actual initial share price.
+	var howManyShares = Math.floor(amountInvested / openingPrice);
+	var actualAmountInvested = formatCurrency(howManyShares * openingPrice, 0);
+	$("input.in").val(actualAmountInvested);
+	calculateResizeInputs(inTextWidth, "in");
+	
+	// update investment date based on earliest available date.
+	var earliestInvestableDate = data[0];
+	$("input.date").val(formatDate(earliestInvestableDate));
+	calculateResizeInputs(dateTextWidth, "date", true);
 }
 
 function whatAreTheyWorthNow(numberofShares ,shares) {
@@ -283,27 +297,27 @@ function getMonthNumber(input) {
 }
 
 function getMonthName(input) {
-	if (input === "01") {
+	if (input == "1") {
 		return "January";
-	} else if (input === "02") {
+	} else if (input == "2") {
 		return "February";
-	} else if (input === "03") {
+	} else if (input == "3") {
 		return "March";
-	} else if (input === "04") {
+	} else if (input == "4") {
 		return "April";
-	} else if (input === "05") {
+	} else if (input == "5") {
 		return "May";
-	} else if (input === "06") {
+	} else if (input == "6") {
 		return "June";
-	} else if (input === "07") {
+	} else if (input == "7") {
 		return "July";
-	} else if (input === "08") {
+	} else if (input == "8") {
 		return "August";
-	} else if (input === "09") {
+	} else if (input == "9") {
 		return "September";
-	} else if (input === "10") {
+	} else if (input == "10") {
 		return "October";
-	} else if (input === "11") {
+	} else if (input == "11") {
 		return "November";
 	} else {
 		return "December";
