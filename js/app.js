@@ -21,6 +21,7 @@ var datePickerOptions = {
 	}
 };
 
+
 var stockOptions = {
     data: stock,
     getValue: "name",
