@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="shortcut icon" href="./img/dollar.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="plugins/easy-autocomplete.min.css">
@@ -9,7 +10,7 @@
   <body>
     <div class="backgroundOverlay"></div>
     <div class="container">
-      <p class="main"><span class="text">If only I had invested <input type="text" class="in" placeholder="$1,000"/> in <input type="text" class="stock" placeholder="Apple Inc."/> on <input type="text" class="date" placeholder="11th April 1989"/>. Today it would be worth <span class="ifOnly">...</span>
+      <p class="main"><span class="text">If only I had invested <input type="text" class="in" placeholder="$1,000"/> in <input type="text" class="stock" placeholder="Apple Inc."/> on <input type="text" class="date" placeholder="11th April 1989" onClick="onDateClick()"/>. Today it would be worth <span class="ifOnly">...</span>
       <span class="hidden_in" style="display:none"></span><span class="hidden_stock" style="display:none"></span><span class="hidden_date" style="display:none"></span></span></p>
       <button>If Only</button>
       <div class="dataTable">

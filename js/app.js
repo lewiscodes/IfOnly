@@ -48,7 +48,6 @@ var stockOptions = {
 };
 
 randomiseBackground();
-$(".date").datetimepicker(datePickerOptions);
 $(".stock").easyAutocomplete(stockOptions);
 
 $("input.in").keyup(function () {
@@ -67,17 +66,6 @@ $("input.stock").keyup(function() {
 
 $("input.stock").blur(function() {
 	validateTicker($("input.stock").val());
-});
-
-$("input.date").keyup(function() {
-	calculateResizeInputs(dateTextWidth, "date", true);
-});
-
-$("input.date").blur(function() {
-	var test = validateDate($("input.date").val());
-	if (validateDate($("input.date").val())) {
-		$("input.date").val(checkLeapYear($("input.date").val()));
-	}
 });
 
 $("button").click(function() {
@@ -109,6 +97,60 @@ $("button").click(function() {
 		$(".secondary").css("display","block");
 	}
 });
+
+function getDevice() {
+	var width = $(window).width();
+	
+	if (width <= 640) {
+		return "mobile";
+	} else if (width > 640 && width < 1025) {
+		return "tablet";
+	} else {
+		return "desktop";
+	}
+}
+
+function onDateClick() {
+	
+	var existingVal = $("input.date").val();
+	var device = getDevice();
+	$(".xdsoft_datetimepicker").remove();
+	
+	if (device === 'desktop') {
+		$("input.date").replaceWith('<input type="text" class="date" placeholder="11th April 1989" onClick="onDateClick()" onBlur="onDateBlur()" onKeyUp="onDateKeyUp()" />');
+		$("input.date").datetimepicker(datePickerOptions);
+	} else {
+		$("input.date").replaceWith('<input type="date" class="date" placeholder="11th April 1989" onClick="onDateClick()" onBlur="onDateBlur()" onKeyUp="onDateKeyUp()" />');
+	}
+	
+	if (validateDate(existingVal)) {
+		$("input.date").val(existingVal)
+	}
+	
+	$("input.date").focus();
+}
+
+function onDateBlur() {
+	var device = getDevice();
+	
+	if (device === 'desktop') {
+		var test = validateDate($("input.date").val());
+		if (validateDate($("input.date").val())) {
+			$("input.date").val(checkLeapYear($("input.date").val()));
+		}
+	} else {
+		var deviceDate = $("input.date").val();
+		if (validateDate(formatDate(deviceDate))) {
+			$("input.date").replaceWith('<input type="text" class="date" placeholder="11th April 1989" onClick="onDateClick()" onBlur="onDateBlur()" onKeyUp="onDateKeyUp()" />');
+			$("input.date").val(formatDate(deviceDate));
+		}
+	}
+}
+
+function onDateKeyUp() {
+	calculateResizeInputs(dateTextWidth, "date", true);
+}
+	
 
 function randomiseBackground() {
   var randomNumber = Math.floor(Math.random() * 5) + 1;
