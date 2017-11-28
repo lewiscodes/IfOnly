@@ -8,23 +8,6 @@ var inTextWidth = $(".in").width();
 var stockTextWidth = $(".stock").width();
 var dateTextWidth = $(".date").width();
 
-<<<<<<< HEAD
-var datePickerOptions = {
-	timepicker:false,
-	format:'Y.m.d',
-	theme: 'dark',
-	validateOnBlur:false,
-	onClose:function(dp, $input){
-		if ($input[0].value.length === 10) {
-			$(".date").val(formatDate($input[0].value));
-			calculateResizeInputs(dateTextWidth, "date", true);
-		}
-	}
-};
-
-
-=======
->>>>>>> master
 var stockOptions = {
     data: stock,
     getValue: "name",
