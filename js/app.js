@@ -8,6 +8,7 @@ var inTextWidth = $(".in").width();
 var stockTextWidth = $(".stock").width();
 var dateTextWidth = $(".date").width();
 
+var options = generateMobileOptions();
 var stockOptions = {
     data: stock,
     getValue: "name",
@@ -101,6 +102,20 @@ function randomiseBackground() {
   image.src = "./img/" + randomNumber + ".jpg";
 }
 
+function generateMobileOptions() {
+  var options = "<select name='stock' class='stock'><option></option>";
+  for (var x=0; x<stock.length; x++) {
+    if (stock[x].code === "AAPL") {
+      options += '<option value="'+ stock[x].url + '" selected>' + stock[x].name + '</option>'
+    } else {
+      options += '<option value="'+ stock[x].url + '">' + stock[x].name + '</option>'
+    }
+  }
+  options += "</select>"
+
+  return options;
+}
+
 function getDevice() {
 	var width = $(window).width();
 
@@ -117,10 +132,18 @@ function setupDeviceSpecifics() {
 	var device = getDevice();
 
 	if (device === "desktop") {
+    if (!$(".stock").is("input")) {
+      $(".stock").replaceWith('<input type="text" class="stock" placeholder="Apple Inc."/>');
+    }
+
 		$(".stock").easyAutocomplete(stockOptions);
 		$(".date").attr("type", "text");
 		$(".date").datepicker({ dateFormat: 'd MM yy', onSelect: function() {calculateResizeInputs(dateTextWidth, "date", true)}});
 	} else {
+    if (!$(".stock").is("select")) {
+      $(".stock").replaceWith(options);
+    }
+    
 		$(".date").attr("type", "date");
 		$(".date").datepicker("destroy");
 	}
