@@ -43,9 +43,11 @@ $("input.in").keyup(function () {
 });
 
 $("input.in").blur(function() {
-	$(".in").val(formatCurrency($(".in").val(),0));
-	validateCurrency($(".in").val());
-	calculateResizeInputs(inTextWidth, "in");
+  if ($("input.in").val() !== '') {
+    $(".in").val(formatCurrency($(".in").val(),0));
+  	validateCurrency($(".in").val());
+  	calculateResizeInputs(inTextWidth, "in");
+  }
 });
 
 $("input.stock").keyup(function() {
@@ -53,7 +55,9 @@ $("input.stock").keyup(function() {
 });
 
 $("input.stock").blur(function() {
-	validateTicker($("input.stock").val());
+  if ($("input.stock").val() !== '') {
+    validateTicker($("input.stock").val());
+  }
 });
 
 $("button").click(function() {
