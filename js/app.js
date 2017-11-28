@@ -8,19 +8,6 @@ var inTextWidth = $(".in").width();
 var stockTextWidth = $(".stock").width();
 var dateTextWidth = $(".date").width();
 
-var datePickerOptions = {
-	timepicker:false,
-	format:'Y.m.d',
-	theme: 'dark',
-	validateOnBlur:false,
-	onClose:function(dp, $input){
-		if ($input[0].value.length === 10) {
-			$(".date").val(formatDate($input[0].value));
-			calculateResizeInputs(dateTextWidth, "date", true);
-		}
-	}
-};
-
 var stockOptions = {
     data: stock,
     getValue: "name",
@@ -48,7 +35,8 @@ var stockOptions = {
 };
 
 randomiseBackground();
-$(".stock").easyAutocomplete(stockOptions);
+setupDeviceSpecifics();
+$(window).resize(function() {setupDeviceSpecifics()});
 
 $("input.in").keyup(function () {
 	calculateResizeInputs(inTextWidth, "in");
@@ -98,60 +86,6 @@ $("button").click(function() {
 	}
 });
 
-function getDevice() {
-	var width = $(window).width();
-	
-	if (width <= 640) {
-		return "mobile";
-	} else if (width > 640 && width < 1025) {
-		return "tablet";
-	} else {
-		return "desktop";
-	}
-}
-
-function onDateClick() {
-	
-	var existingVal = $("input.date").val();
-	var device = getDevice();
-	$(".xdsoft_datetimepicker").remove();
-	
-	if (device === 'desktop') {
-		$("input.date").replaceWith('<input type="text" class="date" placeholder="11th April 1989" onClick="onDateClick()" onBlur="onDateBlur()" onKeyUp="onDateKeyUp()" />');
-		$("input.date").datetimepicker(datePickerOptions);
-	} else {
-		$("input.date").replaceWith('<input type="date" class="date" placeholder="11th April 1989" onClick="onDateClick()" onBlur="onDateBlur()" onKeyUp="onDateKeyUp()" />');
-	}
-	
-	if (validateDate(existingVal)) {
-		$("input.date").val(existingVal)
-	}
-	
-	$("input.date").focus();
-}
-
-function onDateBlur() {
-	var device = getDevice();
-	
-	if (device === 'desktop') {
-		var test = validateDate($("input.date").val());
-		if (validateDate($("input.date").val())) {
-			$("input.date").val(checkLeapYear($("input.date").val()));
-		}
-	} else {
-		var deviceDate = $("input.date").val();
-		if (validateDate(formatDate(deviceDate))) {
-			$("input.date").replaceWith('<input type="text" class="date" placeholder="11th April 1989" onClick="onDateClick()" onBlur="onDateBlur()" onKeyUp="onDateKeyUp()" />');
-			$("input.date").val(formatDate(deviceDate));
-		}
-	}
-}
-
-function onDateKeyUp() {
-	calculateResizeInputs(dateTextWidth, "date", true);
-}
-	
-
 function randomiseBackground() {
   var randomNumber = Math.floor(Math.random() * 5) + 1;
   var image = new Image();
@@ -161,6 +95,31 @@ function randomiseBackground() {
     window.document.body.className += "backgroundBody";
   }
   image.src = "./img/" + randomNumber + ".jpg";
+}
+
+function getDevice() {
+	var width = $(window).width();
+
+	if (width <= 640) {
+		return "mobile";
+	} else if (width > 640 && width < 1025) {
+		return "tablet";
+	} else {
+		return "desktop";
+	}
+}
+
+function setupDeviceSpecifics() {
+	var device = getDevice();
+
+	if (device === "desktop") {
+		$(".stock").easyAutocomplete(stockOptions);
+		$(".date").attr("type", "text");
+		$(".date").datepicker({ dateFormat: 'd MM yy', onSelect: function() {calculateResizeInputs(dateTextWidth, "date", true)}});
+	} else {
+		$(".date").attr("type", "date");
+		$(".date").datepicker("destroy");
+	}
 }
 
 function checkLeapYear(input) {
@@ -253,7 +212,7 @@ function updateInputsWithCorrectData(data, amountInvested, openingPrice) {
 	var actualAmountInvested = formatCurrency(howManyShares * openingPrice, 0);
 	$("input.in").val(actualAmountInvested);
 	calculateResizeInputs(inTextWidth, "in");
-	
+
 	// update investment date based on earliest available date.
 	var earliestInvestableDate = data[0];
 	$("input.date").val(formatDate(earliestInvestableDate));
@@ -291,75 +250,6 @@ function validateTicker(input) {
 	}
 }
 
-function validateDate(input) {
-	var year = parseInt(input.substr(input.length - 4));
-	var monthDay = dates.indexOf(input.slice(0, -5).trim());
-
-	if (isNaN(year) === false && monthDay !== -1) {
-		$("input.date").css("color", "inherit").css("border-color","inherit");
-		return true;
-	} else {
-		$("input.date").css("color", "red").css("border-color","red");
-		return false;
-	}
-}
-
-function getMonthNumber(input) {
-	if (input.toUpperCase() === "JANUARY") {
-		return "01";
-	} else if (input.toUpperCase() === "FEBRUARY") {
-		return "02";
-	} else if (input.toUpperCase() === "MARCH") {
-		return "03";
-	} else if (input.toUpperCase() === "APRIL") {
-		return "04";
-	} else if (input.toUpperCase() === "MAY") {
-		return "05";
-	} else if (input.toUpperCase() === "JUNE") {
-		return "06";
-	} else if (input.toUpperCase() === "JULY") {
-		return "07";
-	} else if (input.toUpperCase() === "AUGUST") {
-		return "08";
-	} else if (input.toUpperCase() === "SEPTEMBER") {
-		return "09";
-	} else if (input.toUpperCase() === "OCTOBER") {
-		return "10";
-	} else if (input.toUpperCase() === "NOVEMBER") {
-		return "11";
-	} else {
-		return "12";
-	}
-}
-
-function getMonthName(input) {
-	if (input == "1") {
-		return "January";
-	} else if (input == "2") {
-		return "February";
-	} else if (input == "3") {
-		return "March";
-	} else if (input == "4") {
-		return "April";
-	} else if (input == "5") {
-		return "May";
-	} else if (input == "6") {
-		return "June";
-	} else if (input == "7") {
-		return "July";
-	} else if (input == "8") {
-		return "August";
-	} else if (input == "9") {
-		return "September";
-	} else if (input == "10") {
-		return "October";
-	} else if (input == "11") {
-		return "November";
-	} else {
-		return "December";
-	}
-}
-
 function getDayPrefix(input) {
 	input = input.toString();
 
@@ -379,14 +269,14 @@ function addTableData(className, data, delay) {
 }
 
 function findBestPrice(input, numberOfShares, originalValue, code) {
-	
+
 	var index = 0;
 	if (code.substring(0, 5) === "WIKI/") {
 		index = 8;
 	} else {
 		index = 3;
 	}
-	
+
 	var highestPrice = 0;
 	var dateOfHighestPrice = null;
 	for (var x = 0; x < input.length; x++) {
@@ -402,12 +292,4 @@ function findBestPrice(input, numberOfShares, originalValue, code) {
 	window.setTimeout(function() {$(".ifOnlyDate").text(formatDate(dateOfHighestPrice))}, 2000);
 	window.setTimeout(function() {$(".ifOnlyShare").text(formatCurrency(highestPrice, 2))}, 2250);
 	window.setTimeout(function() {$(".ifOnlyTotal").text(formatCurrency(difference, 0))}, 2500);
-}
-
-function formatDate(date) {
-	var year = parseInt(date.substr(0, 4));
-	var month = getMonthName(parseInt(date.substr(5, 2)));
-	var day = getDayPrefix(parseInt(date.substr(8, 2)));
-
-	return day + " " + month + " " + year;
 }
