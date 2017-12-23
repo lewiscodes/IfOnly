@@ -1,78 +1,4 @@
 @import url("http://fonts.googleapis.com/css?family=Lato");
-body {
-  font-family: sans-serif;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-color: black;
-  background-position: center; }
-  body .container {
-    width: 85%;
-    min-height: 85vh;
-    background-color: black;
-    opacity: 0.8;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    text-align: center; }
-    body .container button {
-      border: 4px solid white;
-      color: white;
-      background: transparent;
-      padding: 10px 20px;
-      border-radius: 20px;
-      font-size: 40px;
-      display: block;
-      margin: auto; }
-      body .container button:hover {
-        text-decoration: underline; }
-    body .container p {
-      font-size: 45px;
-      margin: 25px;
-      text-align: center;
-      padding: 20px 20px; }
-      body .container p span {
-        color: white; }
-        body .container p span .easy-autocomplete {
-          display: inline; }
-        body .container p span .in, body .container p span .stock, body .container p span .date {
-          border: none;
-          border-bottom: 2px solid white;
-          color: white;
-          background: none;
-          padding: 10px; }
-        body .container p span .ifOnly {
-          min-width: 50px; }
-        body .container p span input.in {
-          width: 150px; }
-        body .container p span input.stock {
-          width: 210px; }
-        body .container p span input.date {
-          width: 325px; }
-    body .container .dataTable {
-      display: none;
-      color: white;
-      font-size: 2em;
-      margin-top: 50px; }
-      body .container .dataTable .row {
-        display: table-row; }
-        body .container .dataTable .row .cell {
-          display: table-cell;
-          border: 1px solid white;
-          padding: 10px 10px; }
-          body .container .dataTable .row .cell.header {
-            text-align: left; }
-          body .container .dataTable .row .cell.data {
-            min-width: 150px; }
-  body .secondary {
-    display: none;
-    color: white;
-    margin-top: 50px; }
-    body .secondary .ifOnlyDate {
-      white-space: nowrap; }
-
 .backgroundBody .backgroundOverlay {
   opacity: 0; }
 
@@ -89,11 +15,94 @@ body {
   opacity: 1;
   transition: opacity 5s linear; }
 
-@media only screen and (max-device-width: 600px) {
-  body {
-    color: green; }
+body {
+  font-family: sans-serif;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: black;
+  background-position: center; }
+  body .container {
+    width: 95%;
+    min-height: 85vh;
+    background-color: black;
+    opacity: 0.8;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    text-align: center; }
+    body .container button {
+      border: 2px solid white;
+      color: white;
+      background: transparent;
+      padding: 5px 10px;
+      border-radius: 10px;
+      font-size: 20px;
+      display: block;
+      margin: auto; }
+      body .container button:hover {
+        text-decoration: underline; }
     body .container p {
-      font-size: 25px; } }
+      font-size: 20px;
+      margin: 0;
+      text-align: center;
+      padding: 10px 10px; }
+      body .container p span {
+        color: white; }
+        body .container p span .in, body .container p span .stock, body .container p span .date {
+          text-align: center;
+          border: none;
+          border-bottom: 1px solid white;
+          color: white;
+          background: none;
+          padding: 5px; }
+        body .container p span .ifOnly {
+          min-width: 50px !important; }
+        body .container p span input.in {
+          max-width: 33%; }
+        body .container p span input.date {
+          max-width: 75%; }
+        body .container p span select.stock {
+          -webkit-appearance: none;
+          width: 95%; }
+
+@media screen and (min-width: 768px) {
+  body .container {
+    width: 90%;
+    min-height: 90vh; }
+    body .container button {
+      border: 4px solid white;
+      border-radius: 20px;
+      padding: 10px 20px;
+      font-size: 35px; }
+    body .container p {
+      font-size: 35px;
+      padding: 20px 20px; }
+      body .container p span .easy-autocomplete {
+        display: inline; }
+        body .container p span .easy-autocomplete input {
+          min-width: 175px; }
+      body .container p span .in, body .container p span .stock, body .container p span .date {
+        padding: 10px; }
+      body .container p span input.in {
+        min-width: 150px !important;
+        max-width: 40%; } }
+@media screen and (min-width: 1280px) {
+  body .container button {
+    font-size: 45px; }
+  body .container p {
+    font-size: 45px;
+    margin: 25px; }
+    body .container p span input {
+      max-width: 85% !important; }
+      body .container p span input.in {
+        min-width: 150px !important; }
+      body .container p span input.stock {
+        min-width: 210px !important; }
+      body .container p span input.date {
+        min-width: 325px !important; } }
 .ui-datepicker {
   background: white;
   padding: 0;

@@ -4,10 +4,6 @@ var ajaxSpinner = "<img src='./img/spinner.gif'/>";
 var numberOfShares = 0;
 var eachSharehNowWorth = 0;
 var ifOnly = 0;
-var inTextWidth = $(".in").width();
-var stockTextWidth = $(".stock").width();
-var dateTextWidth = $(".date").width();
-
 var options = generateMobileOptions();
 var stockOptions = {
     data: stock,
@@ -39,20 +35,11 @@ randomiseBackground();
 setupDeviceSpecifics();
 $(window).resize(function() {setupDeviceSpecifics()});
 
-$("input.in").keyup(function () {
-	calculateResizeInputs(inTextWidth, "in");
-});
-
 $("input.in").blur(function() {
   if ($("input.in").val() !== '') {
     $(".in").val(formatCurrency($(".in").val(),0));
   	validateCurrency($(".in").val());
-  	calculateResizeInputs(inTextWidth, "in");
   }
-});
-
-$("input.stock").keyup(function() {
-	calculateResizeInputs(stockTextWidth, "stock", true);
 });
 
 $("input.stock").blur(function() {
@@ -90,6 +77,23 @@ $("button").click(function() {
 		$(".secondary").css("display","block");
 	}
 });
+
+function resizeElements(el) {
+	var device = getDevice();
+	var int = 30;
+
+  function resize() {
+    el.width(((el.val().length+1) * int) + 'px');
+  }
+
+  el.on('keyup keypress focus blur change', resize)
+  resize();
+}
+
+function removeResizeElements(el) {
+	el.off('keyup keypress focus blur change')
+	el.css("width", '');
+}
 
 function randomiseBackground() {
   var randomNumber = Math.floor(Math.random() * 5) + 1;
@@ -138,14 +142,20 @@ function setupDeviceSpecifics() {
 
 		$(".stock").easyAutocomplete(stockOptions);
 		$(".date").attr("type", "text");
-		$(".date").datepicker({ dateFormat: 'd MM yy', onSelect: function() {calculateResizeInputs(dateTextWidth, "date", true)}});
+		$(".date").datepicker({ dateFormat: 'd MM yy', onSelect: function() {resizeElements($(".date"))}});
+    resizeElements($(".in"));
+    resizeElements($(".stock"));
 	} else {
     if (!$(".stock").is("select")) {
       $(".stock").replaceWith(options);
     }
-    
+
 		$(".date").attr("type", "date");
+    $('.date').val(new Date().toISOString().split('T')[0]);
 		$(".date").datepicker("destroy");
+    removeResizeElements($(".in"));
+    removeResizeElements($(".stock"));
+    removeResizeElements($(".date"));
 	}
 }
 
@@ -177,31 +187,6 @@ function formatCurrency(inputText, dp) {
 			return("$" + formatted0);
 		} else {
 			return("$" + formatted2);
-		}
-  }
-}
-
-function calculateResizeInputs(originalTextWidth, className, additionalElement) {
-	// adds input text to an identically styled span;
-		// measures the width of that span
-		// uses that to determine if the input has to be wider
-  var visibleClass = "." + className;
-  var hiddenClass = ".hidden_" + className;
-  $(hiddenClass).text($(visibleClass).val());
-
-  var hiddenTextWidth = $(hiddenClass).width();
-
-  if (hiddenTextWidth > originalTextWidth) {
-    $(visibleClass).css("width", hiddenTextWidth);
-
-		if (additionalElement) {
-			$($(visibleClass).parent()).css("width", hiddenTextWidth);
-		}
-  } else if (hiddenTextWidth < originalTextWidth) {
-		$(visibleClass).css("width", originalTextWidth);
-
-		if (additionalElement) {
-			$($(visibleClass).parent()).css("width", originalTextWidth);
 		}
   }
 }
@@ -238,12 +223,10 @@ function updateInputsWithCorrectData(data, amountInvested, openingPrice) {
 	var howManyShares = Math.floor(amountInvested / openingPrice);
 	var actualAmountInvested = formatCurrency(howManyShares * openingPrice, 0);
 	$("input.in").val(actualAmountInvested);
-	calculateResizeInputs(inTextWidth, "in");
 
 	// update investment date based on earliest available date.
 	var earliestInvestableDate = data[0];
 	$("input.date").val(formatDate(earliestInvestableDate));
-	calculateResizeInputs(dateTextWidth, "date", true);
 }
 
 function whatAreTheyWorthNow(numberofShares ,shares) {
