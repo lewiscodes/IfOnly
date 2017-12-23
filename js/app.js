@@ -140,6 +140,13 @@ function getDevice() {
 	}
 }
 
+function positionDatePicker() {
+	var datePicker = $(".ui-datepicker");
+	var dateInput = $(".date");
+	var marginNeeded = (dateInput.outerWidth() - datePicker.outerWidth()) / 2;
+	datePicker.css("margin-left", marginNeeded);
+}
+
 function setupDeviceSpecifics() {
 	var device = getDevice();
 
@@ -152,7 +159,8 @@ function setupDeviceSpecifics() {
 		$(".date").attr("type", "text");
 		$(".date").datepicker({ dateFormat: 'd MM yy', onSelect: function() {resizeElements($(".date"))}});
     resizeElements($(".in"));
-    resizeElements($(".stock"));
+		resizeElements($(".stock"));
+		positionDatePicker();
 	} else {
     if (!$(".stock").is("select")) {
       $(".stock").replaceWith(options);
