@@ -80,9 +80,17 @@ $("button").click(function() {
 
 function resizeElements(el) {
 	var device = getDevice();
-	var int = 30;
+	var int = null;
 
   function resize() {
+		if (el.val().length <= 10) {
+			int = 22;
+		} else if (el.val().length <= 20) {
+			int = 20;
+		} else {
+			int = 18;
+		}
+
     el.width(((el.val().length+1) * int) + 'px');
   }
 

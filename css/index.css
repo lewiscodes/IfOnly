@@ -83,6 +83,7 @@ body {
       body .container p span .easy-autocomplete {
         display: inline; }
         body .container p span .easy-autocomplete input {
+          max-width: 85% !important;
           min-width: 175px; }
       body .container p span .in, body .container p span .stock, body .container p span .date {
         padding: 10px; }
