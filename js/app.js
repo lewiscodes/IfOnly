@@ -42,6 +42,12 @@ $("input.in").blur(function() {
   }
 });
 
+$('input.in').on('focus', function() {
+	var formattedNumber = parseInt($('input.in').val().replace('$', '').replace(',', '').replace('.', ''));
+	formattedNumber = !isNaN(formattedNumber) ? formattedNumber : '';
+	$('input.in').val(formattedNumber);
+});
+
 $("input.stock").blur(function() {
   if ($("input.stock").val() !== '') {
     validateTicker($("input.stock").val());
