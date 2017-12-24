@@ -6,8 +6,6 @@ http://xdsoft.net/jqplugins/datetimepicker/
 
 TODO
 
-swap out select with text input at tablet and mobile so can center the text
-fix bug that empties and errors inputs hen there is already data in there and you click in
 correctly format date input when moving from mobile and tablet to desktop
 make money bg picture b&w
 fix button
