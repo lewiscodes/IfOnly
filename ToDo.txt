@@ -1,0 +1,10 @@
+FUNCTIONALITY
+* fix button
+* ensure dates valdate properly on button click at mobile viewpoints
+* mobile styling for secondary page
+* tablet styling for secondary page
+* desktop styling for secondary page
+* integrate crypto currencies
+
+BUGS
+* date formats when switching between desktop and mobile.
