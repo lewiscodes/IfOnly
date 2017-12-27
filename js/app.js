@@ -75,7 +75,6 @@ $("button").click(function() {
 		month = month.substring(0, month.length - 5);
 		month = getMonthNumber(month);
 		var day = date.substr(0 ,date.indexOf(' '));
-		day  = day.substring(0, day.length - 2);
 		date = year + "-" + month + "-" + day;
 
 		getData(date, todayDate, url);
@@ -108,6 +107,82 @@ function removeResizeElements(el) {
 	el.off('keyup keypress focus blur change')
 	el.css("width", '');
 }
+
+function getMonthNumber(input) {
+	if (input.toUpperCase() === "JANUARY") {
+		return "01";
+	} else if (input.toUpperCase() === "FEBRUARY") {
+		return "02";
+	} else if (input.toUpperCase() === "MARCH") {
+		return "03";
+	} else if (input.toUpperCase() === "APRIL") {
+		return "04";
+	} else if (input.toUpperCase() === "MAY") {
+		return "05";
+	} else if (input.toUpperCase() === "JUNE") {
+		return "06";
+	} else if (input.toUpperCase() === "JULY") {
+		return "07";
+	} else if (input.toUpperCase() === "AUGUST") {
+		return "08";
+	} else if (input.toUpperCase() === "SEPTEMBER") {
+		return "09";
+	} else if (input.toUpperCase() === "OCTOBER") {
+		return "10";
+	} else if (input.toUpperCase() === "NOVEMBER") {
+		return "11";
+	} else {
+		return "12";
+	}
+}
+
+function getMonthName(input) {
+	if (input == "1") {
+		return "January";
+	} else if (input == "2") {
+		return "February";
+	} else if (input == "3") {
+		return "March";
+	} else if (input == "4") {
+		return "April";
+	} else if (input == "5") {
+		return "May";
+	} else if (input == "6") {
+		return "June";
+	} else if (input == "7") {
+		return "July";
+	} else if (input == "8") {
+		return "August";
+	} else if (input == "9") {
+		return "September";
+	} else if (input == "10") {
+		return "October";
+	} else if (input == "11") {
+		return "November";
+	} else {
+		return "December";
+	};
+};
+
+function formatDate(date) {
+	var year = parseInt(date.substr(0, 4));
+	var month = getMonthName(parseInt(date.substr(5, 2)));
+	var day = getDayPrefix(parseInt(date.substr(8, 2)));
+	return day + " " + month + " " + year;
+}
+
+function validateDate(input) {
+	var year = parseInt(input.substr(input.length - 4));
+	var monthDay = dates.indexOf(input.slice(0, -5).trim());
+
+	if (isNaN(year) === false && monthDay !== -1) {
+		$("input.date").css("color", "inherit").css("border-color","inherit");
+		return true;
+	} else {
+		$("input.date").css("color", "red").css("border-color","red");
+		return false;
+	}
+};
 
 function randomiseBackground() {
   var randomNumber = Math.floor(Math.random() * 5) + 1;
@@ -216,12 +291,12 @@ function formatCurrency(inputText, dp) {
 function getData(startDate, endDate, code) {
   $.getJSON(URL + code + ".json?" + API_KEY + "&start_date=" + startDate + "&end_date=" + endDate, function(data) {
 		var amountInvested = validateCurrency($(".in").val());
-    numberOfShares = howManyShares(amountInvested, data, code);
+		numberOfShares = howManyShares(amountInvested, data, code);
 		addTableData(".numberOfShares",numberOfShares, 1500);
-    eachSharehNowWorth = whatAreTheyWorthNow(numberOfShares, data);
+		eachSharehNowWorth = whatAreTheyWorthNow(numberOfShares, data);
 		addTableData(".salePrice", formatCurrency(eachSharehNowWorth, 2), 1750);
-    ifOnly = formatCurrency(Math.floor(numberOfShares * eachSharehNowWorth), 0);
-    $(".ifOnly").text(ifOnly);
+		ifOnly = formatCurrency(Math.floor(numberOfShares * eachSharehNowWorth), 0);
+		$(".ifOnly").text(ifOnly);
 		findBestPrice(data.dataset.data, numberOfShares, eachSharehNowWorth, code);
   })
 }
@@ -234,7 +309,7 @@ function howManyShares(amountInvested, shares, code) {
 		index = 3;
 	}
 	var lastIndex = shares.dataset.data.length;
-  var openingPrice = shares.dataset.data[lastIndex - 1][index];
+	var openingPrice = shares.dataset.data[lastIndex - 1][index];
 	updateInputsWithCorrectData(shares.dataset.data[lastIndex - 1], amountInvested, openingPrice);
 	addTableData(".purchasePrice", formatCurrency(openingPrice, 2), 1000);
   return Math.floor(amountInvested / openingPrice);
