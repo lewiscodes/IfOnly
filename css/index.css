@@ -71,8 +71,9 @@ body {
     body .container .dataTable {
       display: none;
       color: white;
-      font-size: 2em;
-      margin-top: 50px; }
+      font-size: 20px;
+      margin-top: 30px;
+      margin-bottom: 30px; }
       body .container .dataTable .row {
         display: table-row; }
         body .container .dataTable .row .cell {
@@ -100,6 +101,8 @@ body {
       padding: 10px 20px;
       font-size: 35px;
       margin-top: 10px; }
+    body .container .dataTable {
+      font-size: 35px; }
     body .container p {
       font-size: 35px;
       padding: 20px 20px; }
@@ -112,7 +115,9 @@ body {
         padding: 10px; }
       body .container p span input.in {
         min-width: 150px !important;
-        max-width: 40%; } }
+        max-width: 40%; }
+      body .container p span input.date {
+        margin-bottom: 10px; } }
 @media screen and (min-width: 1280px) {
   body .container button {
     font-size: 45px;
