@@ -48,6 +48,7 @@ body {
       font-size: 20px;
       display: block;
       margin: auto;
+      margin-top: 20px;
 
       &:hover {
         text-decoration: underline;
@@ -96,23 +97,23 @@ body {
     }
 
     .dataTable {
-      // display: none;
-      // color: white;
-      // font-size: 2em;
-      // margin-top: 50px;
+      display: none;
+      color: white;
+      font-size: 2em;
+      margin-top: 50px;
       .row {
-        // display: table-row;
+        display: table-row;
         .cell {
-          // display: table-cell;
-          // border: 1px solid white;
-          // padding: 10px 10px;
+          display: table-cell;
+          border: 1px solid white;
+          padding: 10px 10px;
 
           &.header {
-            // text-align: left;
+            text-align: left;
           }
 
           &.data {
-            // min-width: 150px;
+            min-width: 150px;
           }
         }
       }
@@ -120,12 +121,12 @@ body {
   }
 
   .secondary {
-    // display: none;
-    // color: white;
-    // margin-top: 50px;
+    display: none;
+    color: white;
+    margin-top: 50px;
 
     .ifOnlyDate {
-      // white-space: nowrap;
+      white-space: nowrap;
     }
   }
 }
@@ -141,6 +142,7 @@ body {
         border-radius: 20px;
         padding: 10px 20px;
         font-size: 35px;
+        margin-top: 10px;
       }
 
       p {
@@ -178,6 +180,7 @@ body {
     .container {
       button {
         font-size: 45px;
+        margin-top: 0;
       }
 
       p {
