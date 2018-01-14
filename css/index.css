@@ -41,7 +41,8 @@ body {
       border-radius: 10px;
       font-size: 20px;
       display: block;
-      margin: auto; }
+      margin: auto;
+      margin-top: 20px; }
       body .container button:hover {
         text-decoration: underline; }
     body .container p {
@@ -67,6 +68,27 @@ body {
         body .container p span select.stock {
           -webkit-appearance: none;
           width: 95%; }
+    body .container .dataTable {
+      display: none;
+      color: white;
+      font-size: 2em;
+      margin-top: 50px; }
+      body .container .dataTable .row {
+        display: table-row; }
+        body .container .dataTable .row .cell {
+          display: table-cell;
+          border: 1px solid white;
+          padding: 10px 10px; }
+          body .container .dataTable .row .cell.header {
+            text-align: left; }
+          body .container .dataTable .row .cell.data {
+            min-width: 150px; }
+  body .secondary {
+    display: none;
+    color: white;
+    margin-top: 50px; }
+    body .secondary .ifOnlyDate {
+      white-space: nowrap; }
 
 @media screen and (min-width: 768px) {
   body .container {
@@ -76,7 +98,8 @@ body {
       border: 4px solid white;
       border-radius: 20px;
       padding: 10px 20px;
-      font-size: 35px; }
+      font-size: 35px;
+      margin-top: 10px; }
     body .container p {
       font-size: 35px;
       padding: 20px 20px; }
@@ -92,7 +115,8 @@ body {
         max-width: 40%; } }
 @media screen and (min-width: 1280px) {
   body .container button {
-    font-size: 45px; }
+    font-size: 45px;
+    margin-top: 0; }
   body .container p {
     font-size: 45px;
     margin: 25px; }

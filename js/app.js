@@ -49,14 +49,14 @@ $('input.in').on('focus', function() {
 });
 
 $("input.stock").blur(function() {
-  if ($("input.stock").val() !== '') {
-    validateTicker($("input.stock").val());
+	if (getTicker() !== '') {
+    validateTicker(getTicker());
   }
 });
 
 $("button").click(function() {
-	// if all input validation passes
-	if (validateCurrency($(".in").val()) && validateTicker($("input.stock").val()) && validateDate($("input.date").val())) {
+	var ticker = getTicker();
+	if (validateCurrency($(".in").val()) && validateTicker(ticker) && validateDate($("input.date").val())) {
 		// adds AJAX spinners on click
 		$(".dataTable .row .data").append(ajaxSpinner);
 		$(".ifOnly").text("");
@@ -65,7 +65,6 @@ $("button").click(function() {
 		$(".ifOnlyShare").append(ajaxSpinner);
 		$(".ifOnlyTotal").append(ajaxSpinner);
 
-		var ticker = $("input.stock").val();
 		var url = $.grep(stock, function(x){ return x.name == ticker; })[0].url;
 		// format dates
 		var todayDate = new Date().toISOString().slice(0,10);
@@ -82,6 +81,14 @@ $("button").click(function() {
 		$(".secondary").css("display","block");
 	}
 });
+
+function getTicker() {
+	if (getDevice() === 'desktop') {
+		return $("input.stock").val();
+	} else {
+		return $("select.stock").find(":selected").text();
+	}
+}
 
 function resizeElements(el) {
 	var device = getDevice();
@@ -172,13 +179,35 @@ function formatDate(date) {
 }
 
 function validateDate(input) {
-	var year = parseInt(input.substr(input.length - 4));
-	var monthDay = dates.indexOf(input.slice(0, -5).trim());
-
-	if (isNaN(year) === false && monthDay !== -1) {
-		$("input.date").css("color", "inherit").css("border-color","inherit");
-		return true;
+	if (getDevice() === 'desktop') {
+		var year = parseInt(input.substr(input.length - 4));
+		var monthDay = dates.indexOf(input.slice(0, -5).trim());
+	
+		if (isNaN(year) === false && monthDay !== -1) {
+			$("input.date").css("color", "inherit").css("border-color","inherit");
+			return true;
+		} else {
+			$("input.date").css("color", "red").css("border-color","red");
+			return false;
+		}
 	} else {
+		var year = parseInt(input.substr(0, 4));
+		var month = input.substr(5, 2);
+		var day = input.substr(7, 2);
+
+		if (isNaN(year) === false) {
+			if ((month === '01' || month === '03' || month === '05' || month === '07' || month === '08' || month === '10' || month === '12') && day <= '31') {
+				$("input.date").css("color", "inherit").css("border-color","inherit");
+				return true;
+			} else if (month === '04' || month === '06' || month === '09' || month === '11') {
+				$("input.date").css("color", "inherit").css("border-color","inherit");
+				return true;
+			} else if (month === '02' && day <= '29') {
+				$("input.date").css("color", "inherit").css("border-color","inherit");
+				return true;
+			}
+		} 
+
 		$("input.date").css("color", "red").css("border-color","red");
 		return false;
 	}
@@ -346,14 +375,18 @@ function validateCurrency(input) {
 }
 
 function validateTicker(input) {
-	var test = $.grep(stock, function(x){ return x.name == input; });
-	if (test.length > 0) {
-		$("input.stock").css("border-color","inherit");
-		return true;
+	if (getDevice() === 'desktop') {
+		var test = $.grep(stock, function(x){ return x.name == input; });
+		if (test.length > 0) {
+			$("input.stock").css("border-color","inherit");
+			return true;
+		} else {
+			$("input.stock").val("");
+			$("input.stock").css("border-color","red");
+			return false;
+		}
 	} else {
-		$("input.stock").val("");
-		$("input.stock").css("border-color","red");
-		return false;
+		return true;
 	}
 }
 
