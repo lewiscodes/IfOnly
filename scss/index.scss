@@ -99,8 +99,9 @@ body {
     .dataTable {
       display: none;
       color: white;
-      font-size: 2em;
-      margin-top: 50px;
+      font-size: 20px;
+      margin-top: 30px;
+      margin-bottom: 30px;
       .row {
         display: table-row;
         .cell {
@@ -145,6 +146,10 @@ body {
         margin-top: 10px;
       }
 
+      .dataTable {
+        font-size: 35px;
+      }
+
       p {
         font-size: 35px;
         padding: 20px 20px;
@@ -167,7 +172,11 @@ body {
             &.in {
               min-width: 150px !important;
               max-width: 40%;
-            }  
+            }
+
+            &.date {
+              margin-bottom: 10px;
+            }
           }  
         }
       }
