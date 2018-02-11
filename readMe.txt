@@ -5,12 +5,6 @@ TECHNICAL INFORMATION
 The logic is all performed using jQuery. The site is fully responsive across mobile, tablet and desktop viewports using a mixture of media queries in CSS and logic in jQuery. The background images are all open source (https://unsplash.com/). The stock input uses a standard HTML5 select element at mobile and tablet viewports, and a jQuery plugin (http://easyautocomplete.com/) at desktop widths. The date picker uses a standard HTML5 date input element at mobile and tablet viewports and another jQuery plugin (https://xdsoft.net/jqplugins/datetimepicker) for desktop. The API for the stock analysis is provided by Quandl (https://blog.quandl.com/api-for-stock-data). The ajaxSpinner is generated using www.loading.io.
 
 FUTURE ENHANCEMENTS
-* Ensure date valdation accounts for different date formats on mobile and tablet viewports (on button click).
-* Mobile styling for secondary page.
-* Tablet styling for secondary page.
-* Desktop styling for secondary page.
 * Look at the posibility of integration for Crypto currencies.
-* Change ajax spinners for something less clunky.
 
 KNOWN BUGS
-* Date formats when switching between desktop and mobile viewports.
