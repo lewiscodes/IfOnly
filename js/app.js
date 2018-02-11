@@ -69,12 +69,16 @@ $("button").click(function() {
 		// format dates
 		var todayDate = new Date().toISOString().slice(0,10);
 		var date = $("input.date").val();
-		var year = parseInt(date.substr(date.length - 4));
-		var month = date.substring(date.indexOf(" ") + 1);
-		month = month.substring(0, month.length - 5);
-		month = getMonthNumber(month);
-		var day = date.substr(0 ,date.indexOf(' '));
-		date = year + "-" + month + "-" + day;
+
+		if (getDevice() === "desktop") {
+			var year = parseInt(date.substr(date.length - 4));
+			var month = date.substring(date.indexOf(" ") + 1);
+			month = month.substring(0, month.length - 5);
+			month = getMonthNumber(month);
+			var day = date.substr(0 ,date.indexOf(' '));
+			day = day.length === 1 ? '0' + day : day;
+			date = year + "-" + month + "-" + day;
+		}
 
 		getData(date, todayDate, url);
 		$(".dataTable").css("display","inline-table");
@@ -352,7 +356,11 @@ function updateInputsWithCorrectData(data, amountInvested, openingPrice) {
 
 	// update investment date based on earliest available date.
 	var earliestInvestableDate = data[0];
-	$("input.date").val(formatDate(earliestInvestableDate));
+	if (getDevice === "desktop") {
+		$("input.date").val(formatDate(earliestInvestableDate));
+	} else {
+		$("input.date").val(earliestInvestableDate);
+	}
 }
 
 function whatAreTheyWorthNow(numberofShares ,shares) {
