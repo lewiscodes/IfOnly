@@ -1,6 +1,6 @@
 var URL = "https://www.quandl.com/api/v3/datasets/";
 var API_KEY = "api_key=LZ5yVTJ1qD8WbKyh2GRg";
-var ajaxSpinner = "<img src='./img/spinner.gif'/>";
+var ajaxSpinner = "<div class='spinner'><img src='./img/spinner.gif'/></div>"
 var numberOfShares = 0;
 var eachSharehNowWorth = 0;
 var ifOnly = 0;
@@ -58,12 +58,8 @@ $("button").click(function() {
 	var ticker = getTicker();
 	if (validateCurrency($(".in").val()) && validateTicker(ticker) && validateDate($("input.date").val())) {
 		// adds AJAX spinners on click
-		$(".dataTable .row .data").append(ajaxSpinner);
+		$("body").append(ajaxSpinner);
 		$(".ifOnly").text("");
-		$(".ifOnly").append(ajaxSpinner);
-		$(".ifOnlyDate").append(ajaxSpinner);
-		$(".ifOnlyShare").append(ajaxSpinner);
-		$(".ifOnlyTotal").append(ajaxSpinner);
 
 		var url = $.grep(stock, function(x){ return x.name == ticker; })[0].url;
 		// format dates
@@ -377,7 +373,6 @@ function validateCurrency(input) {
 		return false;
 	} else {
 		$("input.in").css("border-color","inherit");
-		// return true;
 		return currency;
 	}
 }
@@ -413,7 +408,7 @@ function getDayPrefix(input) {
 }
 
 function addTableData(className, data, delay) {
-	window.setTimeout(function() {$(".data" + className).text(data);}, delay);
+	$(".data" + className).text(data)
 }
 
 function findBestPrice(input, numberOfShares, originalValue, code) {
@@ -440,4 +435,6 @@ function findBestPrice(input, numberOfShares, originalValue, code) {
 	window.setTimeout(function() {$(".ifOnlyDate").text(formatDate(dateOfHighestPrice))}, 2000);
 	window.setTimeout(function() {$(".ifOnlyShare").text(formatCurrency(highestPrice, 2))}, 2250);
 	window.setTimeout(function() {$(".ifOnlyTotal").text(formatCurrency(difference, 0))}, 2500);
+	// removes Ajax Spinner form page
+	window.setTimeout(function() {$(".spinner").remove()}, 3000)
 }

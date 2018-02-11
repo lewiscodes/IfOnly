@@ -19,6 +19,23 @@
   transition: opacity 5s linear;
 }
 
+.spinner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #000;
+  opacity: 0.8;
+
+  img {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
 body {
   font-family: sans-serif;
   background-size: cover;
