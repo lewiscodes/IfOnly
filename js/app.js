@@ -357,7 +357,7 @@ function updateInputsWithCorrectData(data, amountInvested, openingPrice) {
 
 	// update investment date based on earliest available date.
 	var earliestInvestableDate = data[0];
-	if (getDevice === "desktop") {
+	if (getDevice() === "desktop") {
 		$("input.date").val(formatDate(earliestInvestableDate));
 	} else {
 		$("input.date").val(earliestInvestableDate);
