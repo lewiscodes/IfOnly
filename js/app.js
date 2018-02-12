@@ -54,7 +54,7 @@ $("input.stock").blur(function() {
   }
 });
 
-$("button").click(function() {
+$("button").on("click tap", function() {
 	var ticker = getTicker();
 	if (validateCurrency($(".in").val()) && validateTicker(ticker) && validateDate($("input.date").val())) {
 		// adds AJAX spinners on click
