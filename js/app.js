@@ -54,7 +54,7 @@ $("input.stock").blur(function() {
   }
 });
 
-$("button").on("click tap touch touchstart touchmove", function() {
+$("button").on("click touch tap", function() {
 	var ticker = getTicker();
 	if (validateCurrency($(".in").val()) && validateTicker(ticker) && validateDate($("input.date").val())) {
 		// adds AJAX spinners on click
@@ -319,14 +319,19 @@ function formatCurrency(inputText, dp) {
 
 function getData(startDate, endDate, code) {
   $.getJSON(URL + code + ".json?" + API_KEY + "&start_date=" + startDate + "&end_date=" + endDate, function(data) {
-		var amountInvested = validateCurrency($(".in").val());
-		numberOfShares = howManyShares(amountInvested, data, code);
-		addTableData(".numberOfShares",numberOfShares, 1500);
-		eachSharehNowWorth = whatAreTheyWorthNow(numberOfShares, data);
-		addTableData(".salePrice", formatCurrency(eachSharehNowWorth, 2), 1750);
-		ifOnly = formatCurrency(Math.floor(numberOfShares * eachSharehNowWorth), 0);
-		$(".ifOnly").text(ifOnly);
-		findBestPrice(data.dataset.data, numberOfShares, eachSharehNowWorth, code);
+		if (data.dataset.data.length > 0) {
+			var amountInvested = validateCurrency($(".in").val());
+			numberOfShares = howManyShares(amountInvested, data, code);
+			addTableData(".numberOfShares",numberOfShares, 1500);
+			eachSharehNowWorth = whatAreTheyWorthNow(numberOfShares, data);
+			addTableData(".salePrice", formatCurrency(eachSharehNowWorth, 2), 1750);
+			ifOnly = formatCurrency(Math.floor(numberOfShares * eachSharehNowWorth), 0);
+			$(".ifOnly").text(ifOnly);
+			findBestPrice(data.dataset.data, numberOfShares, eachSharehNowWorth, code);
+		} else {
+			// if there is no data, it is probably because there isnt any data available for today. Therefore send a new request using the most recent available date provided by the original API call
+			getData(data.dataset.newest_available_date, endDate, code);
+		}
   })
 }
 
