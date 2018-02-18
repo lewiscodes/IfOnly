@@ -369,17 +369,21 @@ function whatAreTheyWorthNow(numberofShares ,shares) {
 }
 
 function validateCurrency(input) {
-	var currency = input.substring(1);
-	currency = currency.replace(/,/g, '');
-	currency = parseFloat(currency)
-
-	if (isNaN(currency)) {
-		$("input.in").css("border-color","red");
-		return false;
-	} else {
-		$("input.in").css("border-color","inherit");
-		return currency;
+	if (isNaN(input)) {
+		var currency = input.substring(1);
+		currency = currency.replace(/,/g, '');
+		currency = parseFloat(currency);
+	
+		if (isNaN(currency)) {
+			$("input.in").css("border-color","red");
+			return false;
+		} else {
+			$("input.in").css("border-color","inherit");
+			return currency;
+		}
 	}
+
+	return input;
 }
 
 function validateTicker(input) {
